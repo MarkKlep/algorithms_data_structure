@@ -129,8 +129,43 @@ public:
         cout << endl;
     }
 
-    void insert(const unsigned index, T data) {
+    void insert(const unsigned int index, T data) {
+        if (head == nullptr) {
+            head = tail = new Node<T>(data);
+            return;
+        }
 
+        Node<T>* curr = head;
+
+        unsigned int counter = 0;
+
+        while (curr->next && counter != index) {
+            curr = curr->next;
+            counter++;
+        }
+
+        if (counter != index) {
+            cout << "Index: " << index << " is out of range" << endl;
+            return;
+        }
+
+        Node<T>* node = new Node<T>(data);
+
+        if (curr->next) {
+
+            Node<T>* nextCurr = curr->next;
+
+            curr->next = node;
+            node->prev = curr;
+
+            nextCurr->prev = node;
+            node->next = nextCurr;
+
+            return;
+        }
+        
+        curr->next = node;
+        node->prev = curr;
     }
 
 };
@@ -144,15 +179,14 @@ int main() {
     _list.push_back(4);
     _list.push_back(2);
 
-    _list.push_front(5);
-
-    _list.pop_back();
-
-    _list.pop_front();
+    _list.insert(0, 100);
 
     _list.display();
     
-    //list<int> l;
-  
+
+
+
+
+
     return 0;
 }
