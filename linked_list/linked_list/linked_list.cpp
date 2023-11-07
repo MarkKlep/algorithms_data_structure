@@ -4,20 +4,20 @@
 using namespace std;
 
 template<typename T>
-struct Node {
-    T data;
-    Node<T>* prev;
-    Node<T>* next;
-
-    Node(T _data = T()) {
-        data = _data;
-        prev = nullptr;
-        next = nullptr;
-    }
-};
-
-template<typename T>
 class LinkedList {
+
+    template<typename T>
+    struct Node {
+        T data;
+        Node<T>* prev;
+        Node<T>* next;
+
+        Node(T _data = T()) {
+            data = _data;
+            prev = nullptr;
+            next = nullptr;
+        }
+    };
 
     Node<T>* head;
     Node<T>* tail;
@@ -168,6 +168,50 @@ public:
         node->prev = curr;
     }
 
+    void remove(const unsigned int index) {
+        if (!head) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        Node<T>* curr = head;
+        unsigned int counter = 0;
+
+        while (curr->next && counter != index) {
+            curr = curr->next;
+            counter++;
+        }
+
+
+        if (counter != index) {
+            cout << "Index: " << index << " is out of range" << endl;
+            return;
+        }
+
+        if (!curr->next) {
+            pop_back();
+            return;
+        }
+
+        if (!counter) {
+            pop_front();
+            return;
+        }
+
+        Node<T>* temp = curr;
+
+        Node<T>* nextCurr = curr->next;
+        Node<T>* prevCurr = curr->prev;
+
+        curr->next = curr->prev = nullptr;
+
+        prevCurr->next = nextCurr;
+        nextCurr->prev = prevCurr;
+
+        delete temp;
+
+    }
+
 };
 
 int main() {
@@ -179,7 +223,7 @@ int main() {
     _list.push_back(4);
     _list.push_back(2);
 
-    _list.insert(0, 100);
+    _list.remove(2);
 
     _list.display();
     
