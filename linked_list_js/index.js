@@ -3,14 +3,12 @@ class LinkedList {
     constructor() {
         this.head = null;
 
-        class Node {
-            constructor(data) {
+        this.Node = class {
+                constructor(data) {
                 this.data = data;
                 this.next = null;
             }
-        }
-
-        this.Node = Node;
+        };
     }
 
     pushBack(data) {
@@ -140,6 +138,19 @@ class LinkedList {
         this.head = null
     }
     
+    search(data) {
+        let curr = this.head;
+
+        while(curr) {
+            if(curr. data === data) {
+                return curr;
+            }
+
+            curr = curr.next;
+        }
+
+        return null;
+    }
 }
 
 const list = new LinkedList();
@@ -157,7 +168,7 @@ while (true) {
 
 function menu() {
 
-    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'exit'];
+    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'search', 'exit'];
 
     const choice = readlineSync.keyInSelect(select, "Which method?");
 
@@ -192,6 +203,18 @@ function menu() {
             break;
 
         case 5:
+            const value = readlineSync.question("Enter value to find node: ");
+            const node = list.search(value);
+            console.clear();
+            if(node) {
+                console.log("Element was found: " + node.data);
+            }
+            else {
+                console.log("Element wasn`t found;(");
+            }
+            break;
+
+        case 6:
             process.exit();
 
         default:
