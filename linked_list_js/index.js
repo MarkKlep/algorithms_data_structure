@@ -1,20 +1,21 @@
-class Node {
-    constructor(data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 class LinkedList {
-
 
     constructor() {
         this.head = null;
+
+        class Node {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+            }
+        }
+
+        this.Node = Node;
     }
 
     pushBack(data) {
         if(!this.head) {
-            this.head = new Node(data);
+            this.head = new this.Node(data);
             return;
         }
 
@@ -24,7 +25,7 @@ class LinkedList {
             curr = curr.next;
         }
 
-        curr.next = new Node(data);
+        curr.next = new this.Node(data);
     }
 
     display() {
@@ -63,7 +64,7 @@ class LinkedList {
     }
 
     insert(index, data) {
-        let node = new Node(data);
+        let node = new this.Node(data);
     
         if (!this.head || !index) {
             node.next = this.head;
