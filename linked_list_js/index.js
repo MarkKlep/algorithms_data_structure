@@ -127,6 +127,18 @@ class LinkedList {
         curr = null;
     }
     
+    clear() {
+        let curr = this.head;
+
+        while(curr) {
+            let temp = curr;
+
+            curr = curr.next;
+
+            temp.next = null;
+        }
+        this.head = null
+    }
     
 }
 
@@ -145,7 +157,7 @@ while (true) {
 
 function menu() {
 
-    const select = ['pushBack', 'popBack', 'insert', 'remove', 'exit'];
+    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'exit'];
 
     const choice = readlineSync.keyInSelect(select, "Which method?");
 
@@ -175,6 +187,11 @@ function menu() {
             break;
 
         case 4:
+            list.clear();
+            console.clear();
+            break;
+
+        case 5:
             process.exit();
 
         default:
