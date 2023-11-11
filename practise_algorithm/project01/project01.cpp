@@ -70,11 +70,70 @@ public:
     }
 };
 
+template<typename T>
+class DynamicArray {
+    T* array;
+    size_t capacity;
+    size_t size;
+
+public:
+    DynamicArray() : array(nullptr), size(0), capacity(0) {}
+
+    explicit DynamicArray(size_t _capacity) : capacity(_capacity) {
+        array = new T[capacity];
+    }
+
+    ~DynamicArray() {
+        delete[] array;
+    }
+
+    void push_back(const T& value) {
+        if (size == capacity) {
+            capacity = capacity == 0 ? 1 : capacity * 2;
+
+            T* new_array = new T[capacity];
+
+            for (size_t i = 0; i < size; i++) {
+                new_array[i] = array[i];
+            }
+
+            delete[] array;
+
+            array = new_array;
+        }
+
+        array[size++] = value;
+    }
+
+    T& operator[](size_t index) {
+        if (index < 0 || index > size - 1) {
+            //exit(1);
+            throw std::out_of_range("Index out of bounds");
+        }
+
+        return array[index];
+    }
+
+    void print() {
+        for (size_t i = 0; i < size; i++) {
+            cout << array[i] << " -> ";
+        }
+        cout << endl;
+    }
+};
+
 int main() {
 
-    Solution sol;
+    DynamicArray<int> vec;
 
-    cout << sol.romanToInt("MMIV");
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
+    vec.push_back(5);
+
+
+    vec.print();
 
 	return 0;
 }
