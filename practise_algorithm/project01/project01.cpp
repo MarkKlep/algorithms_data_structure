@@ -105,6 +105,31 @@ public:
         array[size++] = value;
     }
 
+    void pop_back() {
+        if (size > 0) {
+
+            size--;
+
+            if (size < capacity / 2) {
+
+                capacity /= 2;
+
+                T* new_array = new T[capacity];
+
+                for (size_t i = 0; i < size; i++) {
+                    new_array[i] = array[i];
+                }
+
+                delete[] array;
+
+                array = new_array;
+            }
+        }
+        else {
+            throw std::out_of_range("Out of range");
+        }
+    }
+
     T& operator[](size_t index) {
         if (index < 0 || index > size - 1) {
             //exit(1);
@@ -122,18 +147,27 @@ public:
     }
 };
 
+
+
+
 int main() {
 
-    DynamicArray<int> vec;
+    DynamicArray<int> arr;
+    arr.push_back(1);
+    arr.push_back(2);
+    arr.push_back(3);
+    arr.push_back(4);
+    arr.push_back(5);
+    arr.push_back(6);
 
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(5);
+    arr.pop_back();
+    arr.pop_back();
+    arr.pop_back();
+    arr.pop_back();
+    arr.pop_back();
+    arr.pop_back();
 
-
-    vec.print();
+    arr.print();
 
 	return 0;
 }
