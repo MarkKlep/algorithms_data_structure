@@ -75,7 +75,7 @@ class BinaryTree {
             node.key = temp.key;
             node.data = temp.data;
 
-            this._remove(temp.right, temp.key);
+            node.right = this._remove(temp.right, temp.key);
         }
 
         return node;
@@ -124,11 +124,7 @@ tree.insert(35, "Data 35");
 tree.insert(1, "Data 1");
 tree.insert(4, "Data 4");
 
-tree.remove(1);
-
-console.log(tree.search(5));
-
-console.log(tree.search(1));
+tree.remove(10);
 
 console.log(tree.postOrderTraversal());
 
