@@ -39,12 +39,53 @@ class BinaryTree {
         if(!node || node.key === key) {
             return node;
         }
-        if(node.key < key) {
-            this._search(node.left, key);
+        else if(key < node.key) {
+            return this._search(node.left, key);
         }
         else {
-            this._search(node.right, key);
+            return this._search(node.right, key);
         }
+    }
+
+    remove(key) {
+        this.root = this._remove(this.root, key);
+    }
+
+    _remove(node, key) {
+        if(!node) {
+            return null;
+        }
+
+        if(key < node.key) {
+            node.left = this._remove(node.left, key);
+        }
+        else if(key > node.key) {
+            node.right = this._remove(node.right, key);
+        }
+        else {
+            if(!node.left) {
+                return node.right;
+            }
+            else if(!node.right) {
+                return node.left;
+            }
+
+            let temp = this.findMin(node.right);
+
+            node.key = temp.key;
+            node.data = temp.data;
+
+            this._remove(temp.right, temp.key);
+        }
+
+        return node;
+    }
+
+    findMin(node) {
+        while(node.left) {
+            node = node.left;
+        }
+        return node;
     }
 
     inOrderTraversal(node = this.root, result = []) {
@@ -83,7 +124,11 @@ tree.insert(35, "Data 35");
 tree.insert(1, "Data 1");
 tree.insert(4, "Data 4");
 
-console.log(tree.search(11));
+tree.remove(1);
+
+console.log(tree.search(5));
+
+console.log(tree.search(1));
 
 console.log(tree.postOrderTraversal());
 
