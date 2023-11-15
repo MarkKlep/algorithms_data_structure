@@ -1,6 +1,6 @@
 class LinkedList {
 
-    constructor() {
+    constructor(...data) {
         this.head = null;
 
         this.Node = class {
@@ -9,6 +9,10 @@ class LinkedList {
                 this.next = null;
             }
         };
+
+        for(let i = 0; i< data.length; i++) {
+            this.pushBack(data[i])
+        }
     }
 
     pushBack(data) {
@@ -151,6 +155,25 @@ class LinkedList {
 
         return null;
     }
+
+    union(list) {
+        if(!list.head) {
+            return;
+        }
+
+        if(!this.head) {
+            this.head = list.head;
+            return;
+        }
+
+        let curr = this.head;
+
+        while(curr.next) {
+            curr = curr.next;
+        }
+
+        curr.next = list.head;
+    }
 }
 
 const list = new LinkedList();
@@ -168,7 +191,7 @@ while (true) {
 
 function menu() {
 
-    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'search', 'exit'];
+    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'search', 'union', 'exit'];
 
     const choice = readlineSync.keyInSelect(select, "Which method?");
 
@@ -214,7 +237,12 @@ function menu() {
             }
             break;
 
-        case 6:
+        case 6: 
+            list.union(new LinkedList(1,5,7));
+            console.clear();
+            break;
+
+        case 7:
             process.exit();
 
         default:
