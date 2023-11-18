@@ -174,6 +174,24 @@ class LinkedList {
 
         curr.next = list.head;
     }
+
+    reverse() {
+        if(!this.head || !this.head.next) {
+            return;
+        }
+
+        let curr = this.head;
+        let prev = null;
+        let next = null;
+        while(curr) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        this.head = prev;
+    }
 }
 
 const list = new LinkedList();
@@ -191,7 +209,7 @@ while (true) {
 
 function menu() {
 
-    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'search', 'union', 'exit'];
+    const select = ['pushBack', 'popBack', 'insert', 'remove', 'clear', 'search', 'union', 'reverse','exit'];
 
     const choice = readlineSync.keyInSelect(select, "Which method?");
 
@@ -243,6 +261,11 @@ function menu() {
             break;
 
         case 7:
+            list.reverse();
+            console.clear();
+            break;
+
+        case 8:
             process.exit();
 
         default:
